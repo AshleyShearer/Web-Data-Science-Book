@@ -2,16 +2,28 @@
 
 Standing decisions for the book and its tools, newest first. Each entry gives the decision, the reason, and where the decision is written or enforced. Entries are never deleted. When a decision is replaced, it is marked *superseded*, with a link to the entry that replaces it. Proposals that nobody has decided yet are listed in [`handoff.md`](handoff.md), not here.
 
-## 2026-10-02 · `webdata` comes from conda-forge, gensim included; the stopword list is a text file
+## 2026-10-02 · Chapter 5 drops scapy for the operating system's own tools
 
 **Decision.**
-- Chapter 1 and the course's setup handout create `webdata` in one command: `conda create -n webdata --override-channels -c conda-forge python=3.14 notebook requests beautifulsoup4 pandas matplotlib seaborn gensim`. It replaces `conda create -n webdata python=3.14` followed by `pip install notebook requests beautifulsoup4 pandas matplotlib seaborn`.
+- Chapter 5 no longer uses scapy. Its traceroute and packet-sniffing code needed `sudo jupyter notebook` (or an Administrator prompt on Windows) and Npcap, which ran the whole notebook with root privileges.
+- `ping`, `traceroute` (`tracert` on Windows), and `curl -v` take their place. They run from notebook cells with Jupyter's `!`, which needs no install and no administrator rights. Each cell picks the right command for the reader's system with `platform.system()`.
+- The book has readers sniff no packets. Chapter 5 explains packets and the TCP handshake with `curl -v`'s account of a connection, and points to Wireshark, on a computer the reader owns, for anyone who wants to see the packets.
+
+**Why.** The maintainer: scapy's install and its `sudo` launch were disruptive and confusing, and running a notebook with `sudo` sets a bad example. Every system ships these tools, and they show the same path and the same handshake without elevated privileges. Students' #106, #111, and #112 edit the scapy text this removes.
+
+**Where.** `ch-05-protocols.qmd` ("TCP/IP: The Transport Layer", "Common Issues to Debug", the graduate extension, "Further Reading"), and week 5's deck in the course repository.
+
+## 2026-10-02 · `webdata` comes from conda-forge with every library the chapters import; the stopword list is a text file
+
+**Decision.**
+- Chapter 1 and the course's setup handout create `webdata` in one command: `conda create -n webdata --override-channels -c conda-forge python=3.14 notebook requests beautifulsoup4 lxml pandas matplotlib seaborn gensim dnspython selenium playwright-python pypdf pdfplumber praw spotipy atproto mastodon.py openai anthropic`. It replaces `conda create -n webdata python=3.14` followed by `pip install notebook requests beautifulsoup4 pandas matplotlib seaborn`.
+- Chapters no longer install their own libraries. Where a chapter used to say `pip install X`, it says that X is in `webdata`, and gives `conda install -c conda-forge X` for an environment made before this change. A chapter that needs a new library adds it to chapter 1's command.
 - Chapter 7 reads its stopwords from `data/stopwords-en.txt` in this repository, fetched with `requests`, in place of NLTK's `stopwords` corpus. The file is NLTK's English list, unchanged. NLTK is no longer a dependency of the book's code.
-- An environment made the old way gains gensim with `conda install -c conda-forge gensim`; chapter 7 says so.
+- Two steps stay in their chapters because they aren't packages: Playwright's browsers (chapter 8) and API keys (chapters 11 to 13).
 
-**Why.** The maintainer asked for chapter 7's bag-of-words section to need no setup beyond week 1's environment. It needed gensim, which has no Python 3.14 build on PyPI, and NLTK, whose corpus download the chapter left commented out. Everything in the new command solves together on conda-forge for Python 3.14, checked on 2026-10-02 (gensim 4.4.0, pandas 3.0.6, Notebook 7.6.3), and chapter 7's code ran in the environment it built. A text file fetched with `requests` is what the course teaches, and it needs no package.
+**Why.** The maintainer asked for every chapter's libraries to be installed in week 1. An audit of the chapters' imports found three that week 1's environment lacked and no chapter installed: `lxml`, which chapter 6's `pd.read_html()` needs, `dnspython` (chapter 5), and `scipy` (chapter 13). Chapter 7 also needed gensim, which has no Python 3.14 build on PyPI, and NLTK, whose corpus download it left commented out. Everything in the new command solves together on conda-forge for Python 3.14, checked on 2026-10-02. All 22 modules the chapters import load in the environment it builds. The same packages, added to a copy of an environment made the old way, load too. conda-forge's `playwright` package is the Node.js command-line tool; the Python library there is `playwright-python`, a release behind PyPI.
 
-**Where.** `ch-01-introduction.qmd` ("Setting Up Your Environment"), `ch-07-archives.qmd` ("Document Similarity with Bag-of-Words", "Common Issues to Debug"), `data/`, `README.md`, `AGENTS.md`, and, in the course repository, `handouts/week-01/setup.md` and week 7's deck.
+**Where.** `ch-01-introduction.qmd` ("Setting Up Your Environment", "Core Libraries", "Common Issues to Debug"), the install notes in chapters 4, 7, 8, 9, 12, and 13, `data/`, `README.md`, `AGENTS.md`, and, in the course repository, `handouts/week-01/setup.md` and the decks that showed installs.
 
 ## 2026-09-25 · The course's User-Agent takes the form the chapters teach
 
