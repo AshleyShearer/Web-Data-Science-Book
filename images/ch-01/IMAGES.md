@@ -15,11 +15,11 @@ for people: what a figure shows that is easy to miss, and what a retake needs.
 
 ## Notes
 
-- **The Jupyter server.** `jupyter-new-menu` and `jupyter-cells` are captures of a real Jupyter Notebook 7.6.3 (JupyterLab 4.6.4, Python 3.14.7) on this machine, installed with the chapter's own commands. Miniforge supplied `conda`; Anaconda's installer isn't needed for what the figures show. To set it up again:
+- **The Jupyter server.** `jupyter-new-menu` and `jupyter-cells` are captures of a real Jupyter Notebook 7.6.3 (JupyterLab 4.6.4, Python 3.14.7) on this machine, installed with the chapter's commands of 2026-09-24 (`conda create`, then `pip install`). Since 2026-10-02 the chapter makes `webdata` from conda-forge in one command, which installs the same Notebook 7.6.3. Miniforge supplied `conda`; Anaconda's installer isn't needed for what the figures show. To set it up again, with the chapter's current command:
 
   ```bash
-  conda create -n webdata python=3.14 && conda activate webdata
-  pip install notebook requests beautifulsoup4 pandas matplotlib seaborn
+  conda create -n webdata --override-channels -c conda-forge python=3.14 notebook requests beautifulsoup4 pandas matplotlib seaborn gensim
+  conda activate webdata
   python tools/make_notebooks.py                    # the companion notebook, current with the chapter
   mkdir -p ~/webdata-notebooks && cp notebooks/ch-01-introduction.ipynb ~/webdata-notebooks/
   cd ~/webdata-notebooks && jupyter notebook --no-browser --ip=127.0.0.1 --port=8888 \

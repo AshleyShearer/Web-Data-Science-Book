@@ -2,6 +2,17 @@
 
 Standing decisions for the book and its tools, newest first. Each entry gives the decision, the reason, and where the decision is written or enforced. Entries are never deleted. When a decision is replaced, it is marked *superseded*, with a link to the entry that replaces it. Proposals that nobody has decided yet are listed in [`handoff.md`](handoff.md), not here.
 
+## 2026-10-02 · `webdata` comes from conda-forge, gensim included; the stopword list is a text file
+
+**Decision.**
+- Chapter 1 and the course's setup handout create `webdata` in one command: `conda create -n webdata --override-channels -c conda-forge python=3.14 notebook requests beautifulsoup4 pandas matplotlib seaborn gensim`. It replaces `conda create -n webdata python=3.14` followed by `pip install notebook requests beautifulsoup4 pandas matplotlib seaborn`.
+- Chapter 7 reads its stopwords from `data/stopwords-en.txt` in this repository, fetched with `requests`, in place of NLTK's `stopwords` corpus. The file is NLTK's English list, unchanged. NLTK is no longer a dependency of the book's code.
+- An environment made the old way gains gensim with `conda install -c conda-forge gensim`; chapter 7 says so.
+
+**Why.** The maintainer asked for chapter 7's bag-of-words section to need no setup beyond week 1's environment. It needed gensim, which has no Python 3.14 build on PyPI, and NLTK, whose corpus download the chapter left commented out. Everything in the new command solves together on conda-forge for Python 3.14, checked on 2026-10-02 (gensim 4.4.0, pandas 3.0.6, Notebook 7.6.3), and chapter 7's code ran in the environment it built. A text file fetched with `requests` is what the course teaches, and it needs no package.
+
+**Where.** `ch-01-introduction.qmd` ("Setting Up Your Environment"), `ch-07-archives.qmd` ("Document Similarity with Bag-of-Words", "Common Issues to Debug"), `data/`, `README.md`, `AGENTS.md`, and, in the course repository, `handouts/week-01/setup.md` and week 7's deck.
+
 ## 2026-09-25 · The course's User-Agent takes the form the chapters teach
 
 **Decision.**

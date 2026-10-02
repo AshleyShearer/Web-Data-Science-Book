@@ -59,10 +59,16 @@ The code blocks in the book reference these libraries. Most students will not ne
 
 ```bash
 pip install requests beautifulsoup4 lxml pandas numpy scipy \
-            matplotlib seaborn selenium pypdf nltk \
+            matplotlib seaborn selenium pypdf \
             scapy dnspython praw spotipy atproto Mastodon.py \
             openai anthropic
 conda install -c conda-forge gensim   # chapter 7; PyPI has no Python 3.14 build of gensim yet
+```
+
+Chapter 1 creates the readers' `webdata` environment from conda-forge in one command, with Jupyter, the core libraries, and gensim:
+
+```bash
+conda create -n webdata --override-channels -c conda-forge python=3.14 notebook requests beautifulsoup4 pandas matplotlib seaborn gensim
 ```
 
 ### Build commands

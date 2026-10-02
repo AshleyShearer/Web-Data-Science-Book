@@ -32,9 +32,9 @@ PDF output is not currently configured; adding it would require TinyTeX and a `p
 ### Dependencies
 
 - Quarto 1.4+
-- Python 3.14 via Anaconda (3.13 also works); on 3.14, gensim comes from conda-forge
+- Python 3.14 via Anaconda (3.13 also works). Chapter 1 creates the readers' `webdata` environment from conda-forge in one command, gensim included, because PyPI has no 3.14 build of gensim
 - Jupyter (for rendering .qmd files with Python code)
-- Key Python libraries: requests, beautifulsoup4, lxml, pandas, numpy, scipy, matplotlib, seaborn, selenium, pypdf, praw, spotipy, atproto, Mastodon.py, openai, anthropic, gensim, nltk, scapy, dnspython
+- Key Python libraries: requests, beautifulsoup4, lxml, pandas, numpy, scipy, matplotlib, seaborn, selenium, pypdf, praw, spotipy, atproto, Mastodon.py, openai, anthropic, gensim, scapy, dnspython
 
 ## Editorial Voice and Style
 

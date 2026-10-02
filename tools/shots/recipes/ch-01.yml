@@ -7,8 +7,9 @@
 # the chapter's own commands, and the chapter's companion notebook in its folder.
 # images/ch-01/IMAGES.md has the commands; in short:
 #
-#   conda create -n webdata python=3.14 && conda activate webdata
-#   pip install notebook requests beautifulsoup4 pandas matplotlib seaborn
+#   conda create -n webdata --override-channels -c conda-forge python=3.14 \
+#       notebook requests beautifulsoup4 pandas matplotlib seaborn gensim
+#   conda activate webdata
 #   cp notebooks/ch-01-introduction.ipynb <folder>/     (regenerated first)
 #   cd <folder> && jupyter notebook --no-browser --ip=127.0.0.1 --port=8888 \
 #       --IdentityProvider.token='' --ServerApp.password=''
